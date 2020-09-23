@@ -55,12 +55,14 @@ const Monkeys = () => {
 	}, []);
 
 	useEffect(() => {
+		if (monkeys.length === counter) return;
+
 		if (monkeys.length < counter) {
-			setMonkeys([...monkeys, <Monkey key={monkeys.length} />]);
+			setMonkeys((monkeys) => [...monkeys, <Monkey key={monkeys.length} />]);
 		} else {
-			setMonkeys([...monkeys].slice(0, monkeys.length - 1));
+			setMonkeys((monkeys) => [...monkeys].slice(0, monkeys.length - 1));
 		}
-	}, [counter]);
+	}, [counter, monkeys.length]);
 
 	return <div className="monkeys">{monkeys.map((monkey) => monkey)}</div>;
 };

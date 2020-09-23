@@ -7,10 +7,8 @@ import './index.css';
 import App from './components/App';
 
 render(
-	<React.StrictMode>
-		<RecoilRoot>
-			<App />
-		</RecoilRoot>
-	</React.StrictMode>,
+	<RecoilRoot>
+		<App />
+	</RecoilRoot>,
 	document.getElementById('root')
 );
