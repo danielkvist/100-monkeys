@@ -10,12 +10,12 @@ const Counter = () => {
 		<div className="counter">
 			<button
 				className="btn counter__btn"
-				disabled={counter >= 100}
+				disabled={counter >= 99}
 				onClick={() => setCount(counter + 1)}
 			>
 				+
 			</button>
-			{counter}
+			{`${counter}`.padStart(2, 0)}
 			<button
 				className="btn counter__btn"
 				disabled={counter <= 1}

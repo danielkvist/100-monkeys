@@ -9,6 +9,20 @@ const genRandomString = () =>
 		.replace(/[^a-z]+/g, '')
 		.substr(0, 1);
 
+const MonkeyBadge = ({ writing }) => {
+	return (
+		<div className={`monkey__badge ${writing ? 'monkey__badge--writing' : ''}`}>
+			{writing ? (
+				<span>...</span>
+			) : (
+				<span role="img" aria-label="coffee">
+					☕
+				</span>
+			)}
+		</div>
+	);
+};
+
 const Monkey = () => {
 	const [writing] = useRecoilState(writingState);
 	const [text, setText] = useState(genRandomString());
@@ -23,7 +37,12 @@ const Monkey = () => {
 		return () => clearInterval(interval);
 	}, [writing]);
 
-	return <div>{text}</div>;
+	return (
+		<div className="monkey">
+			<MonkeyBadge writing={writing} />
+			<span role="img" aria-label="monkey"></span>
+		</div>
+	);
 };
 
 const Monkeys = () => {
@@ -42,7 +61,7 @@ const Monkeys = () => {
 		}
 	}, [counter]);
 
-	return <div>{monkeys.map((monkey) => monkey)}</div>;
+	return <div className="monkeys">{monkeys.map((monkey) => monkey)}</div>;
 };
 
 export default Monkeys;

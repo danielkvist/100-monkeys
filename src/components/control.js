@@ -10,7 +10,7 @@ const Control = () => {
 		<div className="control">
 			{state ? (
 				<button className="btn control__btn" onClick={() => setState(false)}>
-					Pause
+					Stop
 				</button>
 			) : (
 				<button className="btn control__btn" onClick={() => setState(true)}>
