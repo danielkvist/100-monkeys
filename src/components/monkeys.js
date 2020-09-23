@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import copy from 'copy-to-clipboard';
 
 import { counterState, writingState } from '../recoil/atoms';
-
-const genRandomString = () =>
-	Math.random()
-		.toString(36)
-		.replace(/[^a-z]+/g, '')
-		.substr(0, 1);
+import genRandomString from '../utils/gen-random-string';
 
 const MonkeyBadge = ({ writing }) => {
 	return (
@@ -24,7 +20,7 @@ const MonkeyBadge = ({ writing }) => {
 };
 
 const Monkey = () => {
-	const [writing] = useRecoilState(writingState);
+	const [writing, setWriting] = useRecoilState(writingState);
 	const [text, setText] = useState(genRandomString());
 
 	useEffect(() => {
@@ -38,9 +34,14 @@ const Monkey = () => {
 	}, [writing]);
 
 	return (
-		<div className="monkey">
+		<div
+			onClick={() => {
+				setWriting(false);
+				copy(text);
+			}}
+		>
 			<MonkeyBadge writing={writing} />
-			<span role="img" aria-label="monkey"></span>
+			<span className="monkey" role="img" aria-label="monkey"></span>
 		</div>
 	);
 };
