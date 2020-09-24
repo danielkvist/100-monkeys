@@ -27,18 +27,22 @@ body {
 	background-color: var(--red);
 	box-shadow: 5px 5px 5px rgba(12, 12, 12, 0.1);
 	color: var(--beige);
-	display: flex;
-	height: calc(var(--base) * 21);
+	display: grid;
+	grid-template-areas: 'counter title control';
+	grid-template-columns: repeat(3, 1fr);
+	justify-items: center;
 	margin-bottom: calc(var(--base) * 6);
-	justify-content: space-around;
 }
 
 .title {
+	grid-area: title;
 	text-align: center;
 	font-weight: 300;
+	word-break: break-all;
 }
 
 .counter {
+	grid-area: counter;
 	align-items: center;
 	display: grid;
 	font-size: 1.2rem;
@@ -71,6 +75,10 @@ body {
 
 .btn:focus {
 	outline: none;
+}
+
+.control {
+	grid-area: control;
 }
 
 .control__btn {
@@ -179,6 +187,12 @@ span[aria-label='monkey']::before {
 @media screen and (max-width: 700px) {
 	.monkeys {
 		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.app__header {
+		grid-template-areas: 'title title' 'counter control';
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
 	}
 }
 

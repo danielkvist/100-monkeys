@@ -51,7 +51,7 @@ const Monkeys = () => {
 	const [counter] = useRecoilState(counterState);
 
 	useEffect(() => {
-		setMonkeys([<Monkey key={1} />]);
+		setMonkeys([<Monkey key={0} />]);
 	}, []);
 
 	useEffect(() => {
