@@ -10,4 +10,9 @@ const writingState = atom({
 	default: false,
 });
 
-export { counterState, writingState };
+const searchState = atom({
+	key: 'searchState',
+	default: '',
+});
+
+export { counterState, writingState, searchState };

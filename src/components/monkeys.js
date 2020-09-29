@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import copy from 'copy-to-clipboard';
 
-import { counterState, writingState } from '../recoil/atoms';
+import { counterState, writingState, searchState } from '../recoil/atoms';
 import genRandomString from '../utils/gen-random-string';
+
+const MonekyMatch = ({ match }) => {
+	return (
+		<div className={`monkey__match ${match ? 'monkey__match--matched' : ''}`}>
+			{match ? (
+				<span role="img" aria-label="coffee">
+					🔥
+				</span>
+			) : null}
+		</div>
+	);
+};
 
 const MonkeyBadge = ({ writing }) => {
 	return (
@@ -20,8 +32,10 @@ const MonkeyBadge = ({ writing }) => {
 };
 
 const Monkey = () => {
-	const [writing, setWriting] = useRecoilState(writingState);
 	const [text, setText] = useState(genRandomString());
+	const [match, setMatch] = useState(false);
+	const [writing, setWriting] = useRecoilState(writingState);
+	const searchTerm = useRecoilValue(searchState);
 
 	useEffect(() => {
 		if (!writing) return;
@@ -33,6 +47,12 @@ const Monkey = () => {
 		return () => clearInterval(interval);
 	}, [writing]);
 
+	useEffect(() => {
+		if (searchTerm.length >= text || searchTerm === '') return;
+
+		setMatch(text.includes(searchTerm));
+	}, [text, searchTerm]);
+
 	return (
 		<div
 			onClick={() => {
@@ -40,6 +60,7 @@ const Monkey = () => {
 				copy(text);
 			}}
 		>
+			<MonekyMatch match={match} />
 			<MonkeyBadge writing={writing} />
 			<span className="monkey" role="img" aria-label="monkey"></span>
 		</div>

@@ -28,8 +28,9 @@ body {
 	box-shadow: 5px 5px 5px rgba(12, 12, 12, 0.1);
 	color: var(--beige);
 	display: grid;
-	grid-template-areas: 'counter title control';
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-areas: 'title title' 'counter control';
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
 	justify-items: center;
 	margin-bottom: calc(var(--base) * 6);
 }
@@ -38,7 +39,6 @@ body {
 	grid-area: title;
 	text-align: center;
 	font-weight: 300;
-	word-break: break-all;
 }
 
 .counter {
@@ -86,17 +86,35 @@ body {
 	width: 7rem;
 }
 
+.search {
+	display: flex;
+	place-content: center;
+	margin-bottom: calc(var(--base) * 6);
+}
+
+.search__input {
+	border: 2px solid var(--gray);
+	padding: calc(var(--base) * 4) calc(var(--base) * 9);
+	padding-left: calc(var(--base) * 3);
+	border-radius: calc(var(--base) * 3);
+}
+
+.search__input:focus {
+	outline: none;
+	border: 2px solid var(--red);
+}
+
 .length {
 	animation: fade 0.5s ease-in-out forwards;
 	color: var(--red);
 	display: block;
-	margin-bottom: calc(var(--base) * 6);
 	margin: auto;
 	max-width: calc(var(--base) * 172);
 	text-align: center;
 }
 
 .monkeys {
+	margin-top: calc(var(--base) * 6);
 	display: grid;
 	gap: calc(var(--base) * 20);
 	grid-template-columns: repeat(5, 1fr);
@@ -149,6 +167,18 @@ span[aria-label='monkey']::before {
 	animation: up-and-down 0.7s ease-in-out alternate-reverse infinite;
 }
 
+.monkey__match {
+	opacity: 0;
+	position: absolute;
+	transform: translate(1.9rem, -1.15rem);
+	z-index: 99;
+	transition: opacity 0.7s;
+}
+
+.monkey__match--matched {
+	opacity: 1;
+}
+
 @keyframes fade {
 	0% {
 		opacity: 0;
@@ -187,12 +217,6 @@ span[aria-label='monkey']::before {
 @media screen and (max-width: 700px) {
 	.monkeys {
 		grid-template-columns: repeat(3, 1fr);
-	}
-
-	.app__header {
-		grid-template-areas: 'title title' 'counter control';
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(2, 1fr);
 	}
 }
 

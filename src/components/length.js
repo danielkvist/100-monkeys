@@ -20,12 +20,17 @@ const Lenght = () => {
 	return (
 		<>
 			{writing || length !== 0 ? (
-				<p className="length">
-					{length} letters generated! To see what each monkey has written click
-					on it to copy its content automatically!
-				</p>
+				<p className="length">{length} letters generated!</p>
 			) : (
-				<p className="length">Monkeys haven't written anything yet! </p>
+				<p className="length">
+					Monkeys haven't written anything yet! When a monkey writes a text
+					similar to the one you are looking for, an{' '}
+					<span role="img" aria-label="fire emoji">
+						🔥
+					</span>
+					will appear over it. Click on the monkey to copy the text it has
+					generated!
+				</p>
 			)}
 		</>
 	);

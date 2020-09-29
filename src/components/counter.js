@@ -10,7 +10,7 @@ const Counter = () => {
 		<div className="counter">
 			<button
 				className="btn counter__btn"
-				disabled={counter >= 99}
+				disabled={counter >= 100}
 				onClick={() => setCount(counter + 1)}
 			>
 				+
