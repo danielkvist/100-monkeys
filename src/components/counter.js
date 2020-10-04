@@ -1,25 +1,24 @@
-import React from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useContext } from 'react';
 
-import { counterState } from '../recoil/atoms';
+import { Context, actions } from '../context';
 
 const Counter = () => {
-	const [counter, setCount] = useRecoilState(counterState);
+	const { state, dispatch } = useContext(Context);
 
 	return (
 		<div className="counter">
 			<button
 				className="btn counter__btn"
-				disabled={counter >= 100}
-				onClick={() => setCount(counter + 1)}
+				disabled={state.monkeys >= 99}
+				onClick={() => dispatch({ type: actions.addMonkey })}
 			>
 				+
 			</button>
-			{`${counter}`.padStart(2, 0)}
+			{`${state.monkeys}`.padStart(2, 0)}
 			<button
 				className="btn counter__btn"
-				disabled={counter <= 1}
-				onClick={() => setCount(counter - 1)}
+				disabled={state.monkeys <= 1}
+				onClick={() => dispatch({ type: actions.removeMonkey })}
 			>
 				-
 			</button>

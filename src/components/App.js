@@ -6,7 +6,9 @@ import Search from './search';
 import Length from './length';
 import Monkeys from './monkeys';
 
-function App() {
+// TODO: Improve SEO heavily
+
+const App = () => {
 	return (
 		<div className="app">
 			<header className="app__header">
@@ -21,6 +23,6 @@ function App() {
 			</main>
 		</div>
 	);
-}
+};
 
 export default App;

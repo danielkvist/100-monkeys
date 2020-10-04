@@ -1,23 +1,24 @@
-import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useContext } from 'react';
 
-import { writingState, searchState } from '../recoil/atoms';
+import { Context, actions } from '../context';
 
 const Control = () => {
-	const [state, setState] = useRecoilState(writingState);
-	const searchTerm = useRecoilValue(searchState);
+	const { state, dispatch } = useContext(Context);
 
 	return (
 		<div className="control">
-			{state ? (
-				<button className="btn control__btn" onClick={() => setState(false)}>
+			{state.writing ? (
+				<button
+					className="btn control__btn"
+					onClick={() => dispatch({ type: actions.stopWriting })}
+				>
 					Stop
 				</button>
 			) : (
 				<button
 					className="btn control__btn"
-					disabled={searchTerm === ''}
-					onClick={() => setState(true)}
+					disabled={state.searchTerm === ''}
+					onClick={() => dispatch({ type: actions.startWriting })}
 				>
 					Start
 				</button>

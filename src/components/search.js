@@ -1,25 +1,27 @@
-import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useContext } from 'react';
 
-import { writingState, searchState } from '../recoil/atoms';
+import { Context, actions } from '../context';
 
+// TODO: Add styles when disabled
 const Search = () => {
-	const writing = useRecoilValue(writingState);
-	const [search, setSearch] = useRecoilState(searchState);
+	const { state, dispatch } = useContext(Context);
 
 	const handleChange = (e) => {
-		setSearch(e.target.value.toLowerCase().split(' ').join(''));
+		dispatch({
+			type: actions.updateSearch,
+			payload: e.target.value.toLowerCase().split(' ').join(''),
+		});
 	};
 
 	return (
 		<div className="search">
 			<input
 				onChange={handleChange}
-				value={search}
+				value={state.searchTerm}
 				className="search__input"
 				type="text"
 				placeholder="Write something to search"
-				disabled={writing}
+				disabled={state.writing}
 			/>
 		</div>
 	);

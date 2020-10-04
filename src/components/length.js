@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { writingState } from '../recoil/atoms';
+import { Context } from '../context';
 
 const Lenght = () => {
-	const [writing] = useRecoilState(writingState);
+	const { state } = useContext(Context);
 	const [length, setLength] = useState(0);
 
 	useEffect(() => {
-		if (!writing) return;
+		if (!state.writing) return;
 
 		const interval = setInterval(() => {
 			setLength((length) => length + 1);
 		}, 250);
 
 		return () => clearInterval(interval);
-	}, [writing]);
+	}, [state.writing]);
 
 	return (
 		<>
-			{writing || length !== 0 ? (
+			{state.writing || length !== 0 ? (
 				<p className="length">{length} letters generated!</p>
 			) : (
 				<p className="length">

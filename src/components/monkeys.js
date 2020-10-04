@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useState, useEffect, useContext } from 'react';
 import copy from 'copy-to-clipboard';
 
-import { counterState, writingState, searchState } from '../recoil/atoms';
+import { Context, actions } from '../context';
 import genRandomString from '../utils/gen-random-string';
 
 const MonekyMatch = ({ match }) => {
@@ -34,34 +33,33 @@ const MonkeyBadge = ({ writing }) => {
 const Monkey = () => {
 	const [text, setText] = useState(genRandomString());
 	const [match, setMatch] = useState(false);
-	const [writing, setWriting] = useRecoilState(writingState);
-	const searchTerm = useRecoilValue(searchState);
+	const { state, dispatch } = useContext(Context);
 
 	useEffect(() => {
-		if (!writing) return;
+		if (!state.writing) return;
 
 		const interval = setInterval(() => {
 			setText((text) => (text += genRandomString()));
 		}, 250);
 
 		return () => clearInterval(interval);
-	}, [writing]);
+	}, [state.writing]);
 
 	useEffect(() => {
-		if (searchTerm.length >= text || searchTerm === '') return;
+		if (state.searchTerm.length >= text || state.searchTerm === '') return;
 
-		setMatch(text.includes(searchTerm));
-	}, [text, searchTerm]);
+		setMatch(text.includes(state.searchTerm));
+	}, [text, state.searchTerm]);
 
 	return (
 		<div
 			onClick={() => {
-				setWriting(false);
+				dispatch({ type: actions.stopWriting });
 				copy(text);
 			}}
 		>
 			<MonekyMatch match={match} />
-			<MonkeyBadge writing={writing} />
+			<MonkeyBadge writing={state.writing} />
 			<span className="monkey" role="img" aria-label="monkey"></span>
 		</div>
 	);
@@ -69,21 +67,21 @@ const Monkey = () => {
 
 const Monkeys = () => {
 	const [monkeys, setMonkeys] = useState([]);
-	const [counter] = useRecoilState(counterState);
+	const { state } = useContext(Context);
 
 	useEffect(() => {
 		setMonkeys([<Monkey key={0} />]);
 	}, []);
 
 	useEffect(() => {
-		if (monkeys.length === counter) return;
+		if (monkeys.length === state.monkeys) return;
 
-		if (monkeys.length < counter) {
+		if (monkeys.length < state.monkeys) {
 			setMonkeys((monkeys) => [...monkeys, <Monkey key={monkeys.length} />]);
 		} else {
 			setMonkeys((monkeys) => [...monkeys].slice(0, monkeys.length - 1));
 		}
-	}, [counter, monkeys.length]);
+	}, [state.monkeys, monkeys.length]);
 
 	return <div className="monkeys">{monkeys.map((monkey) => monkey)}</div>;
 };
